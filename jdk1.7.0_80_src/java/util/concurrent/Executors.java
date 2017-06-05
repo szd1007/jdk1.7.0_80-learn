@@ -273,7 +273,7 @@ public class Executors {
      * disallow tuning of a given concrete implementation.
      * @param executor the underlying implementation
      * @return an <tt>ExecutorService</tt> instance
-     * @throws NullPointerException if executor null
+     * @throws NullPointerException if executor null  返回的线程池不能被更改
      */
     public static ExecutorService unconfigurableExecutorService(ExecutorService executor) {
         if (executor == null)
@@ -620,7 +620,7 @@ public class Executors {
 
     /**
      * A wrapper class that exposes only the ExecutorService methods
-     * of an ExecutorService implementation.
+     * of an ExecutorService implementation. 向外暴露接口，里面的具体的实现类不用有全局访问的权限
      */
     static class DelegatedExecutorService extends AbstractExecutorService {
         private final ExecutorService e;
