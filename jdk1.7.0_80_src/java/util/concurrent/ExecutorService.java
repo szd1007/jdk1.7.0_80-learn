@@ -200,7 +200,7 @@ public interface ExecutorService extends Executor {
      */
     boolean isTerminated();
 
-    /**
+    /**会阻塞等待
      * Blocks until all tasks have completed execution after a shutdown
      * request, or the timeout occurs, or the current thread is
      * interrupted, whichever happens first.
@@ -259,7 +259,7 @@ public interface ExecutorService extends Executor {
      * return <tt>null</tt> upon <em>successful</em> completion.
      *
      * @param task the task to submit
-     * @return a Future representing pending completion of the task
+     * @return a Future representing pending completion of the task( **PENDING  )
      * @throws RejectedExecutionException if the task cannot be
      *         scheduled for execution
      * @throws NullPointerException if the task is null
@@ -279,7 +279,7 @@ public interface ExecutorService extends Executor {
      * @param tasks the collection of tasks
      * @return A list of Futures representing the tasks, in the same
      *         sequential order as produced by the iterator for the
-     *         given task list, each of which has completed.
+     *         given task list, each of which has completed.(每个任务都已经完成)
      * @throws InterruptedException if interrupted while waiting, in
      *         which case unfinished tasks are cancelled.
      * @throws NullPointerException if tasks or any of its elements are <tt>null</tt>
@@ -290,7 +290,7 @@ public interface ExecutorService extends Executor {
     <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
         throws InterruptedException;
 
-    /**
+    /**  阻塞等
      * Executes the given tasks, returning a list of Futures holding
      * their status and results
      * when all complete or the timeout expires, whichever happens first.

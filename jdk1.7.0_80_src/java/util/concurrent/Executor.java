@@ -43,7 +43,7 @@ package java.util.concurrent;
  * instead of explicitly creating threads. For example, rather than
  * invoking <tt>new Thread(new(RunnableTask())).start()</tt> for each
  * of a set of tasks, you might use:
- *
+ *   接口封装了具体实现，方便以后扩展具体的调用方式============
  * <pre>
  * Executor executor = <em>anExecutor</em>;
  * executor.execute(new RunnableTask1());
@@ -56,7 +56,7 @@ package java.util.concurrent;
  * executor can run the submitted task immediately in the caller's
  * thread:
  *
- * <pre>
+ * <pre>   线程内串行执行
  * class DirectExecutor implements Executor {
  *     public void execute(Runnable r) {
  *         r.run();
@@ -67,7 +67,7 @@ package java.util.concurrent;
  * than the caller's thread.  The executor below spawns a new thread
  * for each task.
  *
- * <pre>
+ * <pre>   为每个线程创建一个线程去运行。类似于普通的创建线程然后调用的方式。
  * class ThreadPerTaskExecutor implements Executor {
  *     public void execute(Runnable r) {
  *         new Thread(r).start();
