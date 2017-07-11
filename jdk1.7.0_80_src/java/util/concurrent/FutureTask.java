@@ -61,13 +61,13 @@ import java.util.concurrent.locks.LockSupport;
  * @param <V> The result type returned by this FutureTask's {@code get} methods
  */
 public class FutureTask<V> implements RunnableFuture<V> {
-    /*
+    /* 之前是用的AQS实现，现在已经重写
      * Revision notes: This differs from previous versions of this
      * class that relied on AbstractQueuedSynchronizer, mainly to
      * avoid surprising users about retaining interrupt status during
      * cancellation races. Sync control in the current design relies
      * on a "state" field updated via CAS to track completion, along
-     * with a simple Treiber stack to hold waiting threads.
+     * with a simple Treiber stack(非阻塞Stack cas实现) to hold waiting threads.
      *
      * Style note: As usual, we bypass overhead of using
      * AtomicXFieldUpdaters and instead directly use Unsafe intrinsics.
