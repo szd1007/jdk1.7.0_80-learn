@@ -107,7 +107,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
     public Future<?> submit(Runnable task) {
         if (task == null) throw new NullPointerException();
         RunnableFuture<Void> ftask = newTaskFor(task, null);
-        execute(ftask);
+        execute(ftask); // 模板模式，提供框架，具体实现在他的子类
         return ftask;
     }
 
@@ -145,8 +145,8 @@ public abstract class AbstractExecutorService implements ExecutorService {
         if (ntasks == 0)
             throw new IllegalArgumentException();
         List<Future<T>> futures= new ArrayList<Future<T>>(ntasks);
-        ExecutorCompletionService<T> ecs =
-            new ExecutorCompletionService<T>(this);
+        ExecutorCompletionService<T> ecs =//ExecutorCompletionService这个类也可以拿出来平常使用，executor加blockingqueue
+            new ExecutorCompletionService<T>(this);//实现
 
         // For efficiency, especially in executors with limited
         // parallelism, check to see if previously submitted tasks are
@@ -167,7 +167,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
             int active = 1;
 
             for (;;) {
-                Future<T> f = ecs.poll();
+                Future<T> f = ecs.poll();//去取数据，空就直接返回
                 if (f == null) {
                     if (ntasks > 0) {
                         --ntasks;
@@ -176,7 +176,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
                     }
                     else if (active == 0)
                         break;
-                    else if (timed) {
+                    else if (timed) {// 超时逻辑
                         f = ecs.poll(nanos, TimeUnit.NANOSECONDS);
                         if (f == null)
                             throw new TimeoutException();
@@ -185,7 +185,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
                         lastTime = now;
                     }
                     else
-                        f = ecs.take();
+                        f = ecs.take();//如果没有超时，则会阻塞等待
                 }
                 if (f != null) {
                     --active;
