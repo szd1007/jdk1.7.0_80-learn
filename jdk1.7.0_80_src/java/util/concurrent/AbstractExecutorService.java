@@ -185,8 +185,8 @@ public abstract class AbstractExecutorService implements ExecutorService {
                         lastTime = now;
                     }
                     else
-                        f = ecs.take();//如果没有超时，则会阻塞等待
-                }
+                        f = ecs.take();//如果没有超时，则会阻塞等待.会循环添加所有任务，take和poll方法会返回任一一个
+                }                      //完成的任务
                 if (f != null) {
                     --active;
                     try {
@@ -237,7 +237,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
                 futures.add(f);
                 execute(f);
             }
-            for (Future<T> f : futures) {
+            for (Future<T> f : futures) {//阻塞等待结果
                 if (!f.isDone()) {
                     try {
                         f.get();
@@ -270,7 +270,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
             long lastTime = System.nanoTime();
 
             // Interleave time checks and calls to execute in case
-            // executor doesn't have any/much parallelism.
+            // executor doesn't have any/much parallelism. 防止在while循环中就把时间耗尽，阻塞等待execute执行
             Iterator<Future<T>> it = futures.iterator();
             while (it.hasNext()) {
                 execute((Runnable)(it.next()));
@@ -286,7 +286,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
                     if (nanos <= 0)
                         return futures;
                     try {
-                        f.get(nanos, TimeUnit.NANOSECONDS);
+                        f.get(nanos, TimeUnit.NANOSECONDS);//futureTask 做具体的判断逻辑.execute更改Future的状态
                     } catch (CancellationException ignore) {
                     } catch (ExecutionException ignore) {
                     } catch (TimeoutException toe) {
