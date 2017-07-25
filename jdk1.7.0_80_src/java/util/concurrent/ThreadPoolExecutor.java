@@ -153,8 +153,8 @@ import java.util.*;
  *
  * There are three general strategies for queuing:
  * <ol>
- *
- * <li> <em> Direct handoffs.</em> A good default choice for a work
+ *       Direct Handoffs  SynchronousQueue 这个queue实现没有自己的空间存放元素,
+ * <li> <em> Direct handoffs.</em> A good default choice for a work  |在线程数一定的情况下，超出处理能力会reject
  * queue is a {@link SynchronousQueue} that hands off tasks to threads
  * without otherwise holding them. Here, an attempt to queue a task
  * will fail if no threads are immediately available to run it, so a
@@ -165,9 +165,9 @@ import java.util.*;
  * possibility of unbounded thread growth when commands continue to
  * arrive on average faster than they can be processed.  </li>
  *
- * <li><em> Unbounded queues.</em> Using an unbounded queue (for
- * example a {@link LinkedBlockingQueue} without a predefined
- * capacity) will cause new tasks to wait in the queue when all
+ * <li><em> Unbounded queues.</em> Using an unbounded queue (for   |无界队列  maximumPoolSize不起作用
+ * example a {@link LinkedBlockingQueue} without a predefined      |只有在队列满的情况下，才会创建多余core的线程
+ * capacity) will cause new tasks to wait in the queue when all    |无界队列当然没有满的时候
  * corePoolSize threads are busy. Thus, no more than corePoolSize
  * threads will ever be created. (And the value of the maximumPoolSize
  * therefore doesn't have any effect.)  This may be appropriate when
@@ -178,7 +178,7 @@ import java.util.*;
  * unbounded work queue growth when commands continue to arrive on
  * average faster than they can be processed.  </li>
  *
- * <li><em>Bounded queues.</em> A bounded queue (for example, an
+ * <li><em>Bounded queues.</em> A bounded queue (for example, an   |有界队列
  * {@link ArrayBlockingQueue}) helps prevent resource exhaustion when
  * used with finite maximumPoolSizes, but can be more difficult to
  * tune and control.  Queue sizes and maximum pool sizes may be traded
@@ -207,7 +207,7 @@ import java.util.*;
  * provided:
  *
  * <ol>
- *
+ *    |拒绝策略， default  AbortPolicy
  * <li> In the default {@link ThreadPoolExecutor.AbortPolicy}, the
  * handler throws a runtime {@link RejectedExecutionException} upon
  * rejection. </li>
@@ -232,7 +232,7 @@ import java.util.*;
  * especially when policies are designed to work only under particular
  * capacity or queuing policies. </dd>
  *
- * <dt>Hook methods</dt>
+ * <dt>Hook methods</dt>   | 钩子函数
  *
  * <dd>This class provides {@code protected} overridable {@link
  * #beforeExecute} and {@link #afterExecute} methods that are called
