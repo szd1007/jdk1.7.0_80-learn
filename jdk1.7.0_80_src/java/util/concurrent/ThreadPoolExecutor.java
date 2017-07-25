@@ -75,10 +75,10 @@ import java.util.*;
  * corePoolSize (see {@link #getCorePoolSize}) and
  * maximumPoolSize (see {@link #getMaximumPoolSize}).
  *
- * When a new task is submitted in method {@link #execute}, and fewer
- * than corePoolSize threads are running, a new thread is created to
- * handle the request, even if other worker threads are idle.  If
- * there are more than corePoolSize but less than maximumPoolSize
+ * When a new task is submitted in method {@link #execute}, and fewer |线程创建策略：当新任务提交时，如果当前运行线程数不到
+ * than corePoolSize threads are running, a new thread is created to  |coreSize，那么会创建新线程来handle，不管当前线程是
+ * handle the request, even if other worker threads are idle.  If     |不是空闲；  如果当前运行线程数大于coreSize小于max，那
+ * there are more than corePoolSize but less than maximumPoolSize     |只要队列不满，则不会创建新的线程。用当前的线程来处理
  * threads running, a new thread will be created only if the queue is
  * full.  By setting corePoolSize and maximumPoolSize the same, you
  * create a fixed-size thread pool. By setting maximumPoolSize to an
@@ -96,7 +96,7 @@ import java.util.*;
  * #prestartAllCoreThreads}.  You probably want to prestart threads if
  * you construct the pool with a non-empty queue. </dd>
  *
- * <dt>Creating new threads</dt>
+ * <dt>Creating new threads</dt>      |用自己的threadFactory设置线程名称，优先级，daemon 等等
  *
  * <dd>New threads are created using a {@link ThreadFactory}.  If not
  * otherwise specified, a {@link Executors#defaultThreadFactory} is
@@ -113,8 +113,8 @@ import java.util.*;
  * take effect in a timely manner, and a shutdown pool may remain in a
  * state in which termination is possible but not completed.</dd>
  *
- * <dt>Keep-alive times</dt>
- *
+ * <dt>Keep-alive times</dt>   |存活时间  默认状态只会对超出coreSize的线程有效。但allowCoreThreadTimeOut
+ *                             |可以使coreSize也过期
  * <dd>If the pool currently has more than corePoolSize threads,
  * excess threads will be terminated if they have been idle for more
  * than the keepAliveTime (see {@link #getKeepAliveTime}). This
@@ -130,7 +130,7 @@ import java.util.*;
  * time-out policy to core threads as well, so long as the
  * keepAliveTime value is non-zero. </dd>
  *
- * <dt>Queuing</dt>
+ * <dt>Queuing</dt>  |队列满只会会抛出异常，不会阻塞
  *
  * <dd>Any {@link BlockingQueue} may be used to transfer and hold
  * submitted tasks.  The use of this queue interacts with pool sizing:
@@ -147,7 +147,7 @@ import java.util.*;
  *
  * <li> If a request cannot be queued, a new thread is created unless
  * this would exceed maximumPoolSize, in which case, the task will be
- * rejected.</li>
+ * rejected.</li> |queue满了之后，来新请求会尝试创建新线程，如果超过maxThread。抛异常
  *
  * </ul>
  *
