@@ -317,7 +317,7 @@ import java.util.*;
 public class ThreadPoolExecutor extends AbstractExecutorService {
     /**
      * The main pool control state, ctl, is an atomic integer packing
-     * two conceptual fields
+     * two conceptual fields                                        |ctl  保存两个信息
      *   workerCount, indicating the effective number of threads
      *   runState,    indicating whether running, shutting down etc
      *
@@ -328,7 +328,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * and the shift/mask constants below adjusted. But until the need
      * arises, this code is a bit faster and simpler using an int.
      *
-     * The workerCount is the number of workers that have been
+     * The workerCount is the number of workers that have been  |workerCount  允许运行的worker数
      * permitted to start and not permitted to stop.  The value may be
      * transiently different from the actual number of live threads,
      * for example when a ThreadFactory fails to create a thread when
@@ -336,7 +336,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * bookkeeping before terminating. The user-visible pool size is
      * reported as the current size of the workers set.
      *
-     * The runState provides the main lifecyle control, taking on values:
+     * The runState provides the main lifecyle control, taking on values:|这个runState和futureTask中的state功能相似
      *
      *   RUNNING:  Accept new tasks and process queued tasks
      *   SHUTDOWN: Don't accept new tasks, but process queued tasks
