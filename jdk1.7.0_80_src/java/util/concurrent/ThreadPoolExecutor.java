@@ -437,7 +437,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * SHUTDOWN to TIDYING).  This accommodates special-purpose
      * queues such as DelayQueues for which poll() is allowed to
      * return null even if it may later return non-null when delays
-     * expire.
+     * expire.  |传递过来的阻塞队列
      */
     private final BlockingQueue<Runnable> workQueue;
 
@@ -458,7 +458,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
     /**
      * Set containing all worker threads in pool. Accessed only when
-     * holding mainLock.
+     * holding mainLock.  |所有的工作线程集合
      */
     private final HashSet<Worker> workers = new HashSet<Worker>();
 
@@ -469,7 +469,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
     /**
      * Tracks largest attained pool size. Accessed only under
-     * mainLock.
+     * mainLock. 线程池线程数大小
      */
     private int largestPoolSize;
 
@@ -503,14 +503,14 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * will likely be enough memory available for the cleanup code to
      * complete without encountering yet another OutOfMemoryError.
      */
-    private volatile ThreadFactory threadFactory;
+    private volatile ThreadFactory threadFactory;// 线程创建工厂
 
     /**
      * Handler called when saturated or shutdown in execute.
      */
     private volatile RejectedExecutionHandler handler;
 
-    /**
+    /**  |allowCoreThreadTimeOut  核心线程是否需要keepAlive过期杀死
      * Timeout in nanoseconds for idle threads waiting for work.
      * Threads use this timeout when there are more than corePoolSize
      * present or if allowCoreThreadTimeOut. Otherwise they wait
@@ -544,7 +544,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     private static final RejectedExecutionHandler defaultHandler =
         new AbortPolicy();
 
-    /**
+    /**  |权限控制相关，非重点
      * Permission required for callers of shutdown and shutdownNow.
      * We additionally require (see checkShutdownAccess) that callers
      * have permission to actually interrupt threads in the worker set
