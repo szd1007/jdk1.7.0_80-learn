@@ -286,7 +286,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
                     if (nanos <= 0)
                         return futures;
                     try {
-                        f.get(nanos, TimeUnit.NANOSECONDS);//futureTask 做具体的判断逻辑.execute更改Future的状态
+                        f.get(nanos, TimeUnit.NANOSECONDS);//futureTask 做具体的判断逻辑.execute调用f的start方法，具体状态改变是futureTask保证
                     } catch (CancellationException ignore) {
                     } catch (ExecutionException ignore) {
                     } catch (TimeoutException toe) {
