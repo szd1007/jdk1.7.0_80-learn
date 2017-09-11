@@ -85,7 +85,7 @@ import java.util.Queue;
  *  </tr>
  * </table>
  *
- * <p>A <tt>BlockingQueue</tt> does not accept <tt>null</tt> elements.
+ * <p>A <tt>BlockingQueue</tt> does not accept <tt>null</tt> elements. |BlockingQueue not accept null
  * Implementations throw <tt>NullPointerException</tt> on attempts
  * to <tt>add</tt>, <tt>put</tt> or <tt>offer</tt> a <tt>null</tt>.  A
  * <tt>null</tt> is used as a sentinel value to indicate failure of
@@ -105,7 +105,7 @@ import java.util.Queue;
  * <em>not</em> performed very efficiently, and are intended for only
  * occasional use, such as when a queued message is cancelled.
  *
- * <p> <tt>BlockingQueue</tt> implementations are thread-safe.  All
+ * <p> <tt>BlockingQueue</tt> implementations are thread-safe.  All     |BlockingQueue thread safe
  * queuing methods achieve their effects atomically using internal
  * locks or other forms of concurrency control. However, the
  * <em>bulk</em> Collection operations <tt>addAll</tt>,
@@ -197,7 +197,7 @@ public interface BlockingQueue<E> extends Queue<E> {
      * @throws IllegalArgumentException if some property of the specified
      *         element prevents it from being added to this queue
      */
-    boolean add(E e);
+    boolean add(E e);//不阻塞添加元素，失败抛异常
 
     /**
      * Inserts the specified element into this queue if it is possible to do
@@ -216,7 +216,7 @@ public interface BlockingQueue<E> extends Queue<E> {
      * @throws IllegalArgumentException if some property of the specified
      *         element prevents it from being added to this queue
      */
-    boolean offer(E e);
+    boolean offer(E e);//不阻塞添加元素，失败返回false
 
     /**
      * Inserts the specified element into this queue, waiting if necessary
