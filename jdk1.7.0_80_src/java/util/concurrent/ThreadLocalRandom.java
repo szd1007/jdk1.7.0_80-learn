@@ -37,7 +37,7 @@ package java.util.concurrent;
 
 import java.util.Random;
 
-/**
+/** random 的threadLocal版本 ，多线程使用
  * A random number generator isolated to the current thread.  Like the
  * global {@link java.util.Random} generator used by the {@link
  * java.lang.Math} class, a {@code ThreadLocalRandom} is initialized
